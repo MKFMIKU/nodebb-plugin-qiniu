@@ -1,5 +1,5 @@
 {
-    "id": "nodebb-plugin-qiniu",
+    "id": "nodebb-plugin-qn-upload",
     "name": "Qiniu Upload Plugin",
     "description": "A Plugin that uploads images to qiniu",
     "url": "https://github.com/barisusakli/nodebb-plugin-qiniu",
