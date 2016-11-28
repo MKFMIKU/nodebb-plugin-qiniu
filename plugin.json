@@ -1,0 +1,18 @@
+{
+    "id": "nodebb-plugin-qiniu",
+    "name": "Qiniu Upload Plugin",
+    "description": "A Plugin that uploads images to qiniu",
+    "url": "https://github.com/barisusakli/nodebb-plugin-qiniu",
+    "library": "./index.js",
+    "staticDirs": {
+        "qiniu": "public"
+    },
+    "hooks": [
+        { "hook": "static:app.load", "method": "init"},
+
+        { "hook": "filter:admin.header.build", "method": "admin.menu"},
+        { "hook": "filter:uploadImage", "method": "upload", "priority": 6 }
+
+    ],
+    "templates": "./public/templates"
+}
