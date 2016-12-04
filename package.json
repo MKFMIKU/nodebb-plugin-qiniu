@@ -1,11 +1,11 @@
 {
   "name": "nodebb-plugin-qn-upload",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A Plugin that uploads images to qiniu",
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/barisusakli/nodebb-plugin-qiniu"
+    "url": "https://github.com/Jokcy/nodebb-plugin-qiniu.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,9 +18,10 @@
   "author": "Jokcy <jokcylou@hotmail.com>",
   "license": "BSD-2-Clause",
   "dependencies": {
+    "md5-file": "^3.1.1",
     "qiniu": "6.1.13"
   },
   "nbbpm": {
-    "compatibility": "^0.7.0 || ^0.8.0 || ^0.9.0 || ^1.0.0"
+    "compatibility": "^0.1.0"
   }
 }

@@ -1,8 +1,10 @@
 'use strict'
 
 var fs = require('fs');
+var path = require('path');
 var nconf = require.main.require('nconf');
 var async = require.main.require('async');
+var md5 = require.main.require('md5-file/promise');
 
 var db = module.parent.require('./database');
 
@@ -51,35 +53,42 @@ function doUpload(data, setting, callback) {
 	qiniu.conf.ACCESS_KEY = setting.accessKey;
 	qiniu.conf.SECRET_KEY = setting.secretKey;
 	bucket = setting.bucket;
-	key = 'test.png';
+	// key = 'test.png';
 
 	var image = data.image;
-
-	var putPolicy = new qiniu.rs.PutPolicy(bucket+":"+key);
-	var token = putPolicy.token()
 
 	var type = image.url ? 'url' : 'file';
 	if (type === 'file' && !image.path) {
 		return callback(new Error('invalid image path'));
 	}
 
-	var extra = new qiniu.io.PutExtra();
-	qiniu.io.putFile(token, key, image.path, extra, function(err, ret) {
-    if(!err) {
-    	console.log('ret--->', ret)
-      // 上传成功， 处理返回值
-      // console.log(ret.hash, ret.key, ret.persistentId);
-      var url = 'http://' + setting.host + '/' + ret.key
-      return callback(null, {
-      	name: image.name,
-      	url: url
-      });
-    } else {
-    	console.log('err--->', err)
-      // 上传失败， 处理返回代码
-      callback(err);
-    }
-  });
+	key = md5(image.path).then(function (hash) {
+		key = hash + path.extname(image.path)
+		var putPolicy = new qiniu.rs.PutPolicy(bucket+":"+key);
+		var token = putPolicy.token()
+		var extra = new qiniu.io.PutExtra();
+		qiniu.io.putFile(token, key, image.path, extra, function(err, ret) {
+			if(!err) {
+				// console.log('ret--->', ret)
+				// 上传成功， 处理返回值
+				// console.log(ret.hash, ret.key, ret.persistentId);
+				var url = 'http://' + setting.host + '/' + ret.key
+				return callback(null, {
+					name: image.name,
+					url: url
+				});
+			} else {
+				// console.log('err--->', err)
+				// 上传失败， 处理返回代码
+				callback(err);
+				// throw err;
+			}
+		});
+	}, function (err) {
+		// console.log(err)
+		callback(err);
+		// throw err;
+	})
 }
 
 module.exports = {
@@ -123,7 +132,7 @@ module.exports = {
 
 	admin: {
 		menu: function(menu, callback) {
-			console.log('---------------------hehehe-------------')
+			// console.log('---------------------hehehe-------------')
 			menu.plugins.push({
 				route: '/plugins/qiniu',
 				icon: 'fa-cloud-upload',
