@@ -5,7 +5,7 @@
   "main": "index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/Jokcy/nodebb-plugin-qiniu.git"
+    "url": "https://github.com/MKFMIKU/nodebb-plugin-qiniu.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,11 +15,11 @@
     "plugin",
     "qiniu"
   ],
-  "author": "Jokcy <jokcylou@hotmail.com>",
+  "author": "Kangfu <kfm@clfstudio.com>",
   "license": "BSD-2-Clause",
   "dependencies": {
     "md5-file": "^3.1.1",
-    "qiniu": "6.1.13"
+    "qiniu": "^6.1.13"
   },
   "nbbpm": {
     "compatibility": "^0.1.0"

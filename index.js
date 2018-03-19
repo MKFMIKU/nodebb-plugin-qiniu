@@ -71,7 +71,7 @@ function doUpload(data, setting, callback) {
 			if(!err) {
 				// console.log('ret--->', ret)
 				// 上传成功， 处理返回值
-				// console.log(ret.hash, ret.key, ret.persistentId);
+				console.log(ret.hash, ret.key, ret.persistentId);
 				var url = 'http://' + setting.host + '/' + ret.key
 				return callback(null, {
 					name: image.name,
